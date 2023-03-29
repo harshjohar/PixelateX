@@ -24,4 +24,11 @@ java -jar PixelateX.jar <src image path>
 ## Sources
 + [This Image is Made of Text](https://youtu.be/55iwMYv8tGI) by [The Coding Train](https://www.youtube.com/c/TheCodingTrain/)
 
+## Sample
+
+| input                                             | output                                            |
+|---------------------------------------------------|---------------------------------------------------|
+| <img src="res/sample/elizabeth.png" height="400"> | <img src="res/sample/elizabeth-ASCII.png" height="400"> |
+
+
 ___
