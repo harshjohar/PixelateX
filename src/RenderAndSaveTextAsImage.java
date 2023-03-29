@@ -17,6 +17,10 @@ public class RenderAndSaveTextAsImage {
     private final int width;
     private final String fileName;
 
+    /**
+     * Constructor to make it ready as a canvas
+     * @param side size of image
+     */
     public RenderAndSaveTextAsImage(int side) {
         this.side = side;
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
@@ -52,6 +56,12 @@ public class RenderAndSaveTextAsImage {
         fileName = builder.toString();
     }
 
+    /**
+     * Save png in the root folder
+     * @param text the pattern
+     * @throws IOException if anything goes wrong
+     * @see ImageShower
+     */
     public void save(String text) throws IOException {
         String[] textArray = text.split("\n");
         BufferedImage image;

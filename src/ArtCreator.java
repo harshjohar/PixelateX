@@ -151,6 +151,7 @@ public class ArtCreator {
      */
     private static void printAndPerformActions(int sides, String filePath) {
         try {
+            System.out.println("Generating art...");
             if(sides > 600) {
                 System.out.println("Maximum permissible size is 600 x 600");
                 System.out.println("Generating max sized image...");
@@ -169,7 +170,7 @@ public class ArtCreator {
         ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
         String text = generator.getAsciiArt(processedImage.getImage(), mode + 1);
         if (popUpImage)
-            new ImageShower(processedImage.getImage());
+            new ImageShower(text, processedImage.getSide());
         else System.out.println(text);
         if (saveAsImage)
             new RenderAndSaveTextAsImage(processedImage.getSide()).save(text);
