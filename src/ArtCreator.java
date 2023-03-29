@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Parses command line arguments. First it checks for options. If there are any options it stores the options and
  * removes them re-creates the array without the options. Then it checks if the number of CLI are valid, if not it prints
@@ -49,7 +47,17 @@ public class ArtCreator {
         }
 
         args = parseOptions(args);
-        System.out.println(Arrays.toString(args));
+        if(args.length == 0 || args.length > 2) {
+            System.out.println(usage);
+            return;
+        }
+
+        if(args.length == 1) {
+            printAndPerformActions(args[0]);
+        }
+
+        // args length == 2
+        printAndPerformActions(Integer.parseInt(args[0]), args[1]);
     }
 
     /**
@@ -111,5 +119,22 @@ public class ArtCreator {
         args = new String[args.length - 1];
         System.arraycopy(argsCopy, 1, args, 0, argsCopy.length - 1);
         return args;
+    }
+
+    /**
+     * Generate art for the given filePath with the default pixel count
+     * @param filePath Path to the image
+     */
+    private static void printAndPerformActions(String filePath) {
+
+    }
+
+    /**
+     * Generate art for the given filePath with the given pixel count and filePath
+     * @param sides pixelCount
+     * @param filePath Path to the image
+     */
+    private static void printAndPerformActions(int sides, String filePath) {
+
     }
 }
