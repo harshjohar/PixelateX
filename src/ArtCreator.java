@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * <h1>Art Creator class</h1>
  * <p>This is the main entry point of the project.</p>
- *
+ * <p>
  * Parses command line arguments. First it checks for options. If there are any options it stores the options and
  * removes them re-creates the array without the options. Then it checks if the number of CLI are valid, if not it prints
  * usage message. If however, it is valid it passes them accordingly to {@link ImageProcessing} constructors.
@@ -32,7 +33,7 @@ public class ArtCreator {
             Note that use only one of the a,b or c option at a time otherwise the behaviour is undefined
             """;
 
-    private static boolean popUpImage = true;
+    private static boolean popUpImage = false;
     private static boolean saveAsImage = false;
     private static int mode = -1;
 
@@ -52,13 +53,14 @@ public class ArtCreator {
         }
 
         args = parseOptions(args);
-        if(args.length == 0 || args.length > 2) {
+        if (args.length == 0 || args.length > 2) {
             System.out.println(usage);
             return;
         }
 
-        if(args.length == 1) {
+        if (args.length == 1) {
             printAndPerformActions(args[0]);
+            return;
         }
 
         // args length == 2
@@ -66,16 +68,17 @@ public class ArtCreator {
     }
 
     /**
-     * Pareses the options(Strings that start with '-'), sets the state of global variables and returns a new array without those options
+     * Parses the options(Strings that start with '-'), sets the state of global variables and returns a new array without those options
      *
      * @param args Command line arguments
      * @return new array of arguments
      */
     private static String[] parseOptions(String[] args) {
+        System.out.println(Arrays.toString(args));
         while (args[0].startsWith("-")) {
             boolean isDone = false;
             if (args[0].contains("i")) {
-                popUpImage = false;
+                popUpImage = true;
                 isDone = true;
             }
             if (args[0].contains("s")) {
@@ -102,7 +105,7 @@ public class ArtCreator {
             }
             // let's roll again
             switch (args[0]) {
-                case "-i" -> popUpImage = false;
+                case "-i" -> popUpImage = true;
                 case "-s" -> saveAsImage = true;
                 case "-a" -> mode = -1;
                 case "-b" -> mode = 0;
@@ -128,30 +131,47 @@ public class ArtCreator {
 
     /**
      * Generate art for the given filePath with the default pixel count
+     *
      * @param filePath Path to the image
      */
     private static void printAndPerformActions(String filePath) {
         try {
             ImageProcessing processedImage = new ImageProcessing(filePath);
-            ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
-            String text = generator.getAsciiArt(processedImage.getImage(), mode+1);
-        } catch(IOException e) {
+            handleOutput(processedImage);
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
      * Generate art for the given filePath with the given pixel count and filePath
-     * @param sides pixelCount
+     *
+     * @param sides    pixelCount
      * @param filePath Path to the image
      */
     private static void printAndPerformActions(int sides, String filePath) {
         try {
+            if(sides > 600) {
+                System.out.println("Maximum permissible size is 600 x 600");
+                System.out.println("Generating max sized image...");
+            }
+            sides = Math.min(600, sides);
             ImageProcessing processedImage = new ImageProcessing(filePath, sides);
-            ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
-            String text = generator.getAsciiArt(processedImage.getImage(), mode+1);
-        } catch(IOException e) {
+            handleOutput(processedImage);
+        } catch (IOException e) {
             System.out.println(e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Pixels should be an integer.");
         }
+    }
+
+    private static void handleOutput(ImageProcessing processedImage) throws IOException {
+        ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
+        String text = generator.getAsciiArt(processedImage.getImage(), mode + 1);
+        if (popUpImage)
+            new ImageShower(processedImage.getImage());
+        else System.out.println(text);
+        if (saveAsImage)
+            new RenderAndSaveTextAsImage(processedImage.getSide()).save(text);
     }
 }
