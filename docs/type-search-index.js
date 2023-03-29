@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"ArtCreator"},{"p":"<Unnamed>","l":"ImageProcessing"},{"p":"<Unnamed>","l":"ImageShower"},{"p":"<Unnamed>","l":"ImageToAsciiGenerator"},{"p":"<Unnamed>","l":"RenderAndSaveTextAsImage"}];updateSearchResults();
