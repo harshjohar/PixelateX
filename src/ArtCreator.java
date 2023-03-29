@@ -1,7 +1,10 @@
 /**
+ * <h1>Art Creator class</h1>
+ * <p>This is the main entry point of the project.</p>
+ *
  * Parses command line arguments. First it checks for options. If there are any options it stores the options and
  * removes them re-creates the array without the options. Then it checks if the number of CLI are valid, if not it prints
- * usage message. If however, it is valid it passes them accordingly to ImageProcessing constructors.
+ * usage message. If however, it is valid it passes them accordingly to {@link ImageProcessing} constructors.
  * <p>
  * <br>
  * <h3>Static Fields</h3>
