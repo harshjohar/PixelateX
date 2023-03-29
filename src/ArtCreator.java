@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * <h1>Art Creator class</h1>
@@ -74,7 +73,6 @@ public class ArtCreator {
      * @return new array of arguments
      */
     private static String[] parseOptions(String[] args) {
-        System.out.println(Arrays.toString(args));
         while (args[0].startsWith("-")) {
             boolean isDone = false;
             if (args[0].contains("i")) {
