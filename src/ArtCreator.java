@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /**
  * <h1>Art Creator class</h1>
  * <p>This is the main entry point of the project.</p>
@@ -129,7 +131,13 @@ public class ArtCreator {
      * @param filePath Path to the image
      */
     private static void printAndPerformActions(String filePath) {
-
+        try {
+            ImageProcessing processedImage = new ImageProcessing(filePath);
+            ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
+            String text = generator.getAsciiArt(processedImage.getImage(), mode+1);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -138,6 +146,12 @@ public class ArtCreator {
      * @param filePath Path to the image
      */
     private static void printAndPerformActions(int sides, String filePath) {
-
+        try {
+            ImageProcessing processedImage = new ImageProcessing(filePath, sides);
+            ImageToAsciiGenerator generator = new ImageToAsciiGenerator(processedImage.getSide());
+            String text = generator.getAsciiArt(processedImage.getImage(), mode+1);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
